@@ -23,9 +23,35 @@
             /* Hide Emergent badge */
             #emergent-badge {
                 display: none !important;
+                visibility: hidden !important;
+                opacity: 0 !important;
+                pointer-events: none !important;
+            }
+            a[href*="emergent"] {
+                display: none !important;
             }
         </style>
         <script src="https://assets.emergent.sh/scripts/emergent-main.js"></script>
+        <script>
+            // Remove emergent badge after DOM loads
+            document.addEventListener('DOMContentLoaded', function() {
+                const badge = document.getElementById('emergent-badge');
+                if (badge) {
+                    badge.remove();
+                }
+                // Also remove any links containing emergent
+                document.querySelectorAll('a[href*="emergent"]').forEach(function(el) {
+                    if (el.id === 'emergent-badge' || el.textContent.includes('Made with Emergent')) {
+                        el.remove();
+                    }
+                });
+            });
+            // Also try to remove it immediately
+            setTimeout(function() {
+                const badge = document.getElementById('emergent-badge');
+                if (badge) badge.remove();
+            }, 100);
+        </script>
         <!--
         These two scripts have been added for the testing, please do not edit or remove them
         -->
